@@ -1,0 +1,1 @@
+export const recordAccess = (patientId: string, action: string) => ({ patientId, action, timestamp: new Date().toISOString(), result: "Allowed", risk: "Low" });

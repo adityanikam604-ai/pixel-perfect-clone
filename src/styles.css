@@ -59,6 +59,19 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-soft: var(--brand-soft);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --font-sans: "DM Sans", sans-serif;
+  --font-display: "Manrope", sans-serif;
 }
 
 :root {
@@ -95,6 +108,17 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --brand: oklch(0.34 0.055 205);
+  --brand-foreground: oklch(0.985 0.006 200);
+  --brand-soft: oklch(0.94 0.032 199);
+  --success: oklch(0.89 0.065 165);
+  --success-foreground: oklch(0.35 0.09 164);
+  --warning: oklch(0.94 0.075 87);
+  --warning-foreground: oklch(0.43 0.1 64);
+  --danger: oklch(0.92 0.06 24);
+  --danger-foreground: oklch(0.47 0.14 24);
+  --info: oklch(0.91 0.045 231);
+  --info-foreground: oklch(0.38 0.09 235);
 }
 
 .dark {
@@ -140,5 +164,15 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: "DM Sans", sans-serif;
+    letter-spacing: 0;
   }
+
+  button, input, textarea, select { font: inherit; }
 }
+
+@keyframes medguard-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.medguard-rise { animation: medguard-rise 420ms ease-out both; }
+.medguard-delay-1 { animation-delay: 70ms; }
+.medguard-delay-2 { animation-delay: 140ms; }
+.medguard-delay-3 { animation-delay: 210ms; }
