@@ -10,33 +10,217 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActivityRouteImport } from './routes/activity'
+import { Route as EmergencyAccessRouteImport } from './routes/emergency-access'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PatientsRouteImport } from './routes/patients'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as DoctorDashboardRouteImport } from './routes/doctor.dashboard'
+import { Route as NurseDashboardRouteImport } from './routes/nurse.dashboard'
+import { Route as PatientsIdRouteImport } from './routes/patients.$id'
+import { Route as SecurityAlertsRouteImport } from './routes/security.alerts'
+import { Route as SecurityDashboardRouteImport } from './routes/security.dashboard'
+import { Route as SecurityLogsRouteImport } from './routes/security.logs'
+import { Route as SecurityRulesRouteImport } from './routes/security.rules'
+import { Route as SecurityUsersRouteImport } from './routes/security.users'
+import { Route as SecurityAlertsIdRouteImport } from './routes/security.alerts.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActivityRoute = ActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmergencyAccessRoute = EmergencyAccessRouteImport.update({
+  id: '/emergency-access',
+  path: '/emergency-access',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PatientsRoute = PatientsRouteImport.update({
+  id: '/patients',
+  path: '/patients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoctorDashboardRoute = DoctorDashboardRouteImport.update({
+  id: '/doctor/dashboard',
+  path: '/doctor/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NurseDashboardRoute = NurseDashboardRouteImport.update({
+  id: '/nurse/dashboard',
+  path: '/nurse/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PatientsIdRoute = PatientsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PatientsRoute,
+} as any)
+const SecurityAlertsRoute = SecurityAlertsRouteImport.update({
+  id: '/security/alerts',
+  path: '/security/alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityDashboardRoute = SecurityDashboardRouteImport.update({
+  id: '/security/dashboard',
+  path: '/security/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityLogsRoute = SecurityLogsRouteImport.update({
+  id: '/security/logs',
+  path: '/security/logs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityRulesRoute = SecurityRulesRouteImport.update({
+  id: '/security/rules',
+  path: '/security/rules',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityUsersRoute = SecurityUsersRouteImport.update({
+  id: '/security/users',
+  path: '/security/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityAlertsIdRoute = SecurityAlertsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => SecurityAlertsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/emergency-access': typeof EmergencyAccessRoute
+  '/login': typeof LoginRoute
+  '/patients': typeof PatientsRouteWithChildren
+  '/profile': typeof ProfileRoute
+  '/doctor/dashboard': typeof DoctorDashboardRoute
+  '/nurse/dashboard': typeof NurseDashboardRoute
+  '/patients/$id': typeof PatientsIdRoute
+  '/security/alerts': typeof SecurityAlertsRouteWithChildren
+  '/security/dashboard': typeof SecurityDashboardRoute
+  '/security/logs': typeof SecurityLogsRoute
+  '/security/rules': typeof SecurityRulesRoute
+  '/security/users': typeof SecurityUsersRoute
+  '/security/alerts/$id': typeof SecurityAlertsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/emergency-access': typeof EmergencyAccessRoute
+  '/login': typeof LoginRoute
+  '/patients': typeof PatientsRouteWithChildren
+  '/profile': typeof ProfileRoute
+  '/doctor/dashboard': typeof DoctorDashboardRoute
+  '/nurse/dashboard': typeof NurseDashboardRoute
+  '/patients/$id': typeof PatientsIdRoute
+  '/security/alerts': typeof SecurityAlertsRouteWithChildren
+  '/security/dashboard': typeof SecurityDashboardRoute
+  '/security/logs': typeof SecurityLogsRoute
+  '/security/rules': typeof SecurityRulesRoute
+  '/security/users': typeof SecurityUsersRoute
+  '/security/alerts/$id': typeof SecurityAlertsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/emergency-access': typeof EmergencyAccessRoute
+  '/login': typeof LoginRoute
+  '/patients': typeof PatientsRouteWithChildren
+  '/profile': typeof ProfileRoute
+  '/doctor/dashboard': typeof DoctorDashboardRoute
+  '/nurse/dashboard': typeof NurseDashboardRoute
+  '/patients/$id': typeof PatientsIdRoute
+  '/security/alerts': typeof SecurityAlertsRouteWithChildren
+  '/security/dashboard': typeof SecurityDashboardRoute
+  '/security/logs': typeof SecurityLogsRoute
+  '/security/rules': typeof SecurityRulesRoute
+  '/security/users': typeof SecurityUsersRoute
+  '/security/alerts/$id': typeof SecurityAlertsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/activity'
+    | '/emergency-access'
+    | '/login'
+    | '/patients'
+    | '/profile'
+    | '/doctor/dashboard'
+    | '/nurse/dashboard'
+    | '/patients/$id'
+    | '/security/alerts'
+    | '/security/dashboard'
+    | '/security/logs'
+    | '/security/rules'
+    | '/security/users'
+    | '/security/alerts/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/activity'
+    | '/emergency-access'
+    | '/login'
+    | '/patients'
+    | '/profile'
+    | '/doctor/dashboard'
+    | '/nurse/dashboard'
+    | '/patients/$id'
+    | '/security/alerts'
+    | '/security/dashboard'
+    | '/security/logs'
+    | '/security/rules'
+    | '/security/users'
+    | '/security/alerts/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/activity'
+    | '/emergency-access'
+    | '/login'
+    | '/patients'
+    | '/profile'
+    | '/doctor/dashboard'
+    | '/nurse/dashboard'
+    | '/patients/$id'
+    | '/security/alerts'
+    | '/security/dashboard'
+    | '/security/logs'
+    | '/security/rules'
+    | '/security/users'
+    | '/security/alerts/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActivityRoute: typeof ActivityRoute
+  EmergencyAccessRoute: typeof EmergencyAccessRoute
+  LoginRoute: typeof LoginRoute
+  PatientsRoute: typeof PatientsRouteWithChildren
+  ProfileRoute: typeof ProfileRoute
+  DoctorDashboardRoute: typeof DoctorDashboardRoute
+  NurseDashboardRoute: typeof NurseDashboardRoute
+  SecurityAlertsRoute: typeof SecurityAlertsRouteWithChildren
+  SecurityDashboardRoute: typeof SecurityDashboardRoute
+  SecurityLogsRoute: typeof SecurityLogsRoute
+  SecurityRulesRoute: typeof SecurityRulesRoute
+  SecurityUsersRoute: typeof SecurityUsersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +232,145 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/activity': {
+      id: '/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof ActivityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/emergency-access': {
+      id: '/emergency-access'
+      path: '/emergency-access'
+      fullPath: '/emergency-access'
+      preLoaderRoute: typeof EmergencyAccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/patients': {
+      id: '/patients'
+      path: '/patients'
+      fullPath: '/patients'
+      preLoaderRoute: typeof PatientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doctor/dashboard': {
+      id: '/doctor/dashboard'
+      path: '/doctor/dashboard'
+      fullPath: '/doctor/dashboard'
+      preLoaderRoute: typeof DoctorDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nurse/dashboard': {
+      id: '/nurse/dashboard'
+      path: '/nurse/dashboard'
+      fullPath: '/nurse/dashboard'
+      preLoaderRoute: typeof NurseDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/patients/$id': {
+      id: '/patients/$id'
+      path: '/$id'
+      fullPath: '/patients/$id'
+      preLoaderRoute: typeof PatientsIdRouteImport
+      parentRoute: typeof PatientsRoute
+    }
+    '/security/alerts': {
+      id: '/security/alerts'
+      path: '/security/alerts'
+      fullPath: '/security/alerts'
+      preLoaderRoute: typeof SecurityAlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security/dashboard': {
+      id: '/security/dashboard'
+      path: '/security/dashboard'
+      fullPath: '/security/dashboard'
+      preLoaderRoute: typeof SecurityDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security/logs': {
+      id: '/security/logs'
+      path: '/security/logs'
+      fullPath: '/security/logs'
+      preLoaderRoute: typeof SecurityLogsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security/rules': {
+      id: '/security/rules'
+      path: '/security/rules'
+      fullPath: '/security/rules'
+      preLoaderRoute: typeof SecurityRulesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security/users': {
+      id: '/security/users'
+      path: '/security/users'
+      fullPath: '/security/users'
+      preLoaderRoute: typeof SecurityUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security/alerts/$id': {
+      id: '/security/alerts/$id'
+      path: '/$id'
+      fullPath: '/security/alerts/$id'
+      preLoaderRoute: typeof SecurityAlertsIdRouteImport
+      parentRoute: typeof SecurityAlertsRoute
+    }
   }
 }
 
+interface PatientsRouteChildren {
+  PatientsIdRoute: typeof PatientsIdRoute
+}
+
+const PatientsRouteChildren: PatientsRouteChildren = {
+  PatientsIdRoute: PatientsIdRoute,
+}
+
+const PatientsRouteWithChildren = PatientsRoute._addFileChildren(
+  PatientsRouteChildren,
+)
+
+interface SecurityAlertsRouteChildren {
+  SecurityAlertsIdRoute: typeof SecurityAlertsIdRoute
+}
+
+const SecurityAlertsRouteChildren: SecurityAlertsRouteChildren = {
+  SecurityAlertsIdRoute: SecurityAlertsIdRoute,
+}
+
+const SecurityAlertsRouteWithChildren = SecurityAlertsRoute._addFileChildren(
+  SecurityAlertsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActivityRoute: ActivityRoute,
+  EmergencyAccessRoute: EmergencyAccessRoute,
+  LoginRoute: LoginRoute,
+  PatientsRoute: PatientsRouteWithChildren,
+  ProfileRoute: ProfileRoute,
+  DoctorDashboardRoute: DoctorDashboardRoute,
+  NurseDashboardRoute: NurseDashboardRoute,
+  SecurityAlertsRoute: SecurityAlertsRouteWithChildren,
+  SecurityDashboardRoute: SecurityDashboardRoute,
+  SecurityLogsRoute: SecurityLogsRoute,
+  SecurityRulesRoute: SecurityRulesRoute,
+  SecurityUsersRoute: SecurityUsersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
