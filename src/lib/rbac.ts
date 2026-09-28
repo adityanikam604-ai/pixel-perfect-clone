@@ -33,16 +33,12 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     "view_alerts",
     "view_access_logs",
     "investigate_alerts",
-    "manage_security_rules",
     "view_profile",
   ],
   Administrator: [
     "view_patient_records",
     "access_patient_record",
-    "view_security_dashboard",
-    "view_alerts",
     "view_access_logs",
-    "investigate_alerts",
     "manage_users",
     "manage_security_rules",
     "view_my_activity",
@@ -111,8 +107,11 @@ export function normalizeRole(role: string): UserRole | null {
  */
 export function getDefaultRouteForRole(role: UserRole | string | undefined): string {
   const norm = role ? normalizeRole(role) : null;
-  if (norm === "Security officer" || norm === "Administrator") {
+  if (norm === "Security officer") {
     return "/security/dashboard";
+  }
+  if (norm === "Administrator") {
+    return "/security/users";
   }
   return "/doctor/dashboard";
 }

@@ -194,17 +194,14 @@ function Sidebar({ page, security = false, mobileOpen, setMobileOpen }: { page: 
         { href: "/security/dashboard", label: "Security dashboard", Icon: LayoutDashboard, badge: undefined },
         { href: "/security/alerts", label: "Alerts", Icon: ShieldAlert, badge: "3" },
         { href: "/security/logs", label: "Access logs", Icon: FileText, badge: undefined },
-        { href: "/security/rules", label: "Security rules", Icon: SlidersHorizontal, badge: undefined },
         { href: "/profile", label: "Profile", Icon: UserRound, badge: undefined },
       ];
     }
     // Administrator
     return [
-      { href: "/security/dashboard", label: "Security dashboard", Icon: LayoutDashboard, badge: undefined },
-      { href: "/patients", label: "Patient records", Icon: Users, badge: undefined },
-      { href: "/security/alerts", label: "Alerts", Icon: ShieldAlert, badge: "3" },
-      { href: "/security/logs", label: "Access logs", Icon: FileText, badge: undefined },
       { href: "/security/users", label: "Users", Icon: Users, badge: undefined },
+      { href: "/patients", label: "Patient records", Icon: FileText, badge: undefined },
+      { href: "/security/logs", label: "Access logs", Icon: FileText, badge: undefined },
       { href: "/security/rules", label: "Security rules", Icon: SlidersHorizontal, badge: undefined },
       { href: "/profile", label: "Profile", Icon: UserRound, badge: undefined },
     ];

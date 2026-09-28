@@ -8,7 +8,7 @@ const router = Router();
 // Clinicians and Admins with 'view_patient_records' permission can search/list patients
 router.get('/', authMiddleware, requirePermission('view_patient_records'), listPatients);
 
-// Patient detail requires 'access_patient_record' & RBAC department scope check
-router.get('/:id', authMiddleware, requirePermission('access_patient_record'), checkPatientScope, getPatientById);
+// Patient detail requires 'access_patient_record' permission
+router.get('/:id', authMiddleware, requirePermission('access_patient_record'), getPatientById);
 
 export default router;

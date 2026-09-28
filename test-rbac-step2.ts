@@ -52,8 +52,9 @@ async function runTests() {
 
   assert(hasPermission('Administrator', 'manage_users'), 'Admin has manage_users');
   assert(hasPermission('Administrator', 'view_patient_records'), 'Admin has view_patient_records');
-  assert(hasPermission('Administrator', 'view_alerts'), 'Admin has view_alerts');
+  assert(hasPermission('Administrator', 'manage_security_rules'), 'Admin has manage_security_rules');
   assert(hasPermission('Administrator', 'view_access_logs'), 'Admin has view_access_logs');
+  assert(!hasPermission('Administrator', 'view_alerts'), 'Admin does NOT have view_alerts (Security Officer only)');
 
   // 3. Frontend Route Protection Tests
   console.log('\n--- 3. Frontend Route Access Tests ---');
@@ -82,10 +83,10 @@ async function runTests() {
   assert(!canAccessPage('Security officer', 'patients'), 'Security Officer CANNOT access patients');
 
   assert(canAccessPage('Administrator', 'users'), 'Admin can access users');
-  assert(canAccessPage('Administrator', 'security-dashboard'), 'Admin can access security-dashboard');
+  assert(canAccessPage('Administrator', 'rules'), 'Admin can access security rules');
   assert(canAccessPage('Administrator', 'patients'), 'Admin can access patients');
-  assert(canAccessPage('Administrator', 'alerts'), 'Admin can access alerts');
   assert(canAccessPage('Administrator', 'logs'), 'Admin can access logs');
+  assert(!canAccessPage('Administrator', 'alerts'), 'Admin CANNOT access alerts (Security Officer only)');
 
   // 4. Backend API RBAC Tests (HTTP Integration)
   console.log('\n--- 4. Backend API RBAC Middleware Tests ---');
@@ -196,7 +197,7 @@ async function runTests() {
   const adminAlerts = await fetch(`${baseUrl}/alerts`, {
     headers: { Authorization: `Bearer ${adminAuth.token}` },
   });
-  assert(adminAlerts.status === 200, 'Admin GET /api/alerts returns 200 OK');
+  assert(adminAlerts.status === 403, 'Admin GET /api/alerts returns 403 Forbidden (Security Officer only)');
 
   const adminPatients = await fetch(`${baseUrl}/patients`, {
     headers: { Authorization: `Bearer ${adminAuth.token}` },

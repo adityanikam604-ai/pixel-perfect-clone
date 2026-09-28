@@ -199,13 +199,13 @@ export async function registerWithSupabase(
           updated_at: new Date().toISOString(),
         };
         if (authUserId) {
-          payload.auth_user_id = authUserId;
+          payload['auth_user_id'] = authUserId;
         }
 
         let { error: dbError } = await supabase.from('users').upsert(payload, { onConflict: 'email' });
 
         if (dbError && dbError.message.includes('auth_user_id')) {
-          delete payload.auth_user_id;
+          delete payload['auth_user_id'];
           const retry = await supabase.from('users').upsert(payload, { onConflict: 'email' });
           dbError = retry.error;
         }
