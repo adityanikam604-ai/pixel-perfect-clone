@@ -77,8 +77,33 @@ INSERT INTO investigations (id, alert_id, assigned_to, assigned_officer_name, st
 ('INV-5002', 'ALT-2045', 'USR-003', 'Arjun Patel', 'Resolved', 'Confirmed with Dr. Sameer Khan that he was called in for an urgent on-call neurology consultation.', 'Legitimate on-call consultation verified by department head.', NOW() - INTERVAL '1 day 7 hours', NOW() - INTERVAL '1 day 5 hours'),
 ('INV-5003', 'ALT-2044', 'USR-003', 'Arjun Patel', 'Resolved', 'Emergency room code blue incident. Mass trauma patient records triaged per hospital standard emergency protocol.', 'Emergency protocol compliance validated.', NOW() - INTERVAL '1 day 11 hours', NOW() - INTERVAL '1 day 10 hours');
 
--- Ensure tables are accessible to anon/authenticated client
-ALTER TABLE users DISABLE ROW LEVEL SECURITY;
+-- ------------------------------------------------------------------------------
+-- 7. ROW LEVEL SECURITY (RLS) & ACCESS PERMISSIONS
+-- ------------------------------------------------------------------------------
+ALTER TABLE public.users ADD COLUMN IF NOT EXISTS auth_user_id UUID UNIQUE;
+CREATE INDEX IF NOT EXISTS idx_users_auth_user_id ON public.users(auth_user_id);
+
+ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow users to read profiles" ON public.users;
+CREATE POLICY "Allow users to read profiles"
+ON public.users FOR SELECT
+TO anon, authenticated
+USING (true);
+
+DROP POLICY IF EXISTS "Allow user registration profile insert" ON public.users;
+CREATE POLICY "Allow user registration profile insert"
+ON public.users FOR INSERT
+TO anon, authenticated
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow users to update own profile" ON public.users;
+CREATE POLICY "Allow users to update own profile"
+ON public.users FOR UPDATE
+TO authenticated
+USING (auth.uid() = auth_user_id OR auth_user_id IS NULL)
+WITH CHECK (auth.uid() = auth_user_id OR auth_user_id IS NULL);
+
 ALTER TABLE patients DISABLE ROW LEVEL SECURITY;
 ALTER TABLE access_logs DISABLE ROW LEVEL SECURITY;
 ALTER TABLE login_attempts DISABLE ROW LEVEL SECURITY;

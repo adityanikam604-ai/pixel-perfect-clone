@@ -184,12 +184,12 @@ export async function registerWithSupabase(
       }
 
       // 4. Create or Update User Profile in public.users table
-      const finalId = authData?.user?.id || userId;
-      account.id = finalId;
+      const authUserId = authData?.user?.id || null;
+      account.id = userId;
 
       try {
-        const { error: dbError } = await supabase.from('users').upsert({
-          id: finalId,
+        const payload: Record<string, any> = {
+          id: userId,
           name: account.name,
           email: cleanEmail,
           role: account.role,
@@ -197,7 +197,18 @@ export async function registerWithSupabase(
           status: 'Active',
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
-        });
+        };
+        if (authUserId) {
+          payload.auth_user_id = authUserId;
+        }
+
+        let { error: dbError } = await supabase.from('users').upsert(payload, { onConflict: 'email' });
+
+        if (dbError && dbError.message.includes('auth_user_id')) {
+          delete payload.auth_user_id;
+          const retry = await supabase.from('users').upsert(payload, { onConflict: 'email' });
+          dbError = retry.error;
+        }
 
         if (dbError) {
           console.warn('[Supabase users table insert warning]:', dbError.message);
@@ -224,7 +235,7 @@ export async function registerWithSupabase(
     }
   }
 
-  // 5. Save locally
+  // 5. Save locally and in database store
   saveAccount(account);
 
   return {
@@ -250,15 +261,32 @@ export async function loginWithSupabase(email: string, password: string): Promis
 
       if (!authError && authData?.user) {
         // Fetch extended user profile from public.users table
-        const { data: userRecord } = await supabase
-          .from('users')
-          .select('*')
-          .eq('email', cleanEmail)
-          .maybeSingle();
+        let userRecord = null;
+        try {
+          const { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .or(`auth_user_id.eq.${authData.user.id},email.eq.${cleanEmail}`)
+            .maybeSingle();
+          if (!error && data) {
+            userRecord = data;
+          }
+        } catch {
+          // Schema fallback if column not yet added
+        }
+
+        if (!userRecord) {
+          const { data } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', cleanEmail)
+            .maybeSingle();
+          userRecord = data;
+        }
 
         const metadata: Record<string, any> = authData.user.user_metadata || {};
         const account: Account = {
-          id: userRecord?.id || authData.user.id,
+          id: userRecord?.id || `USR-${Math.floor(100 + Math.random() * 900)}`,
           email: cleanEmail,
           password,
           name: userRecord?.name || (metadata['name'] as string) || cleanEmail.split('@')[0],

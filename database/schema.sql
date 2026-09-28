@@ -20,6 +20,7 @@ DROP TABLE IF EXISTS users CASCADE;
 -- ------------------------------------------------------------------------------
 CREATE TABLE users (
     id VARCHAR(64) PRIMARY KEY,
+    auth_user_id UUID UNIQUE,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     role VARCHAR(50) NOT NULL CHECK (role IN ('Doctor', 'Nurse', 'Security officer', 'Administrator')),
@@ -29,6 +30,7 @@ CREATE TABLE users (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE INDEX idx_users_auth_user_id ON users(auth_user_id);
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_role ON users(role);
 CREATE INDEX idx_users_department ON users(department);
@@ -152,9 +154,30 @@ CREATE INDEX idx_investigations_status ON investigations(status);
 
 -- ------------------------------------------------------------------------------
 -- 7. ROW LEVEL SECURITY (RLS) & ACCESS PERMISSIONS
--- Disable RLS on mock demo tables so the MedGuard app can read and write
 -- ------------------------------------------------------------------------------
-ALTER TABLE users DISABLE ROW LEVEL SECURITY;
+-- Enable RLS on users table with granular policies
+ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow users to read profiles" ON public.users;
+CREATE POLICY "Allow users to read profiles"
+ON public.users FOR SELECT
+TO anon, authenticated
+USING (true);
+
+DROP POLICY IF EXISTS "Allow user registration profile insert" ON public.users;
+CREATE POLICY "Allow user registration profile insert"
+ON public.users FOR INSERT
+TO anon, authenticated
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow users to update own profile" ON public.users;
+CREATE POLICY "Allow users to update own profile"
+ON public.users FOR UPDATE
+TO authenticated
+USING (auth.uid() = auth_user_id OR auth_user_id IS NULL)
+WITH CHECK (auth.uid() = auth_user_id OR auth_user_id IS NULL);
+
+-- Application mock tables access
 ALTER TABLE patients DISABLE ROW LEVEL SECURITY;
 ALTER TABLE access_logs DISABLE ROW LEVEL SECURITY;
 ALTER TABLE login_attempts DISABLE ROW LEVEL SECURITY;
