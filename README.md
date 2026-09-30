@@ -1,24 +1,15 @@
-# Pixel Perfect Clone
+Problem Statement
 
-Implement exactly the screenshot and nothing else
+Hospitals store sensitive patient information. Unauthorized or suspicious access can put patient data at risk. The problem is to detect unusual activities such as repeated failed logins, excessive patient-record access, and unauthorized role/department access.
 
-This project was built with [Lovable](https://lovable.dev).
+Solution — MedGuard
 
-## Build with Lovable
+MedGuard is a healthcare security platform that:
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/47b8d437-4de5-40ca-92ee-1260033af24f).
+🔐 Uses RBAC (Role-Based Access Control) to control access.
+📝 Logs every patient-data access attempt.
+🚨 Detects suspicious activities using predefined security rules.
+📊 Shows alerts and evidence on a Security Dashboard.
+🔍 Helps security officers investigate and resolve incidents.
+🚑 Handles legitimate emergency access to reduce false alerts.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
